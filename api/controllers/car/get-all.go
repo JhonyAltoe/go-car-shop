@@ -6,15 +6,12 @@ import (
 	"net/http"
 )
 
-// func YourHandler(w http.ResponseWriter, r *http.Request) {
-// 	w.Write([]byte("Gorilla!\n"))
-// }
-
-func (c *carController) GetAllCars(res http.ResponseWriter, req *http.Request) {
+func (c *carController) GetAll(res http.ResponseWriter, req *http.Request) {
 	res.Header().Add("Content-Type", "application/json")
 	cars, err := c.CarService.GetAll(context.Background())
 	if err != nil {
-		utils.SendError(err, res)
+		res.WriteHeader(http.StatusBadRequest)
+		res.Write([]byte(err.Error()))
 		return
 	}
 	res.WriteHeader(http.StatusOK)

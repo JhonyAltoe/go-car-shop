@@ -8,7 +8,7 @@ import (
 )
 
 type TCarController interface {
-	GetAll(res *http.ResponseWriter, req *http.Request)
+	GetAll(res http.ResponseWriter, req *http.Request)
 }
 
 type carController struct {
