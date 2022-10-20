@@ -9,11 +9,11 @@ import (
 )
 
 type TCarService interface {
-	GetAll(ctx *context.Context) (*[]entities.TCar, error)
+	GetAll(ctx context.Context) ([]entities.TCar, error)
 }
 
 type carService struct {
-	carModel.TCarModel
+	carModel carModel.TCarModel
 }
 
 func New(collection *mongo.Collection) TCarService {
