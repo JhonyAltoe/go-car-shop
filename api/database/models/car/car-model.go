@@ -9,6 +9,7 @@ import (
 
 type TCarModel interface {
 	GetAll(ctx context.Context) ([]entities.TCar, error)
+	CreateOne(ctx context.Context, car entities.TCar) (entities.TCar, error)
 }
 
 type carModel struct {
