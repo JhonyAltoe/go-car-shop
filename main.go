@@ -1,14 +1,14 @@
 package main
 
 import (
+	"fmt"
 	"net/http"
 
-	mongoconfig "github.com/jhony/go-car-shop/api/database/config"
-	car_router "github.com/jhony/go-car-shop/api/routes"
+	routes "github.com/jhony/go-car-shop/api/routes"
 )
 
 func main() {
-	mongoconfig.Connect()
-	routes := car_router.CarRoutes()
+	routes := routes.CarRoutes()
+	fmt.Println("Server is running on port 8080")
 	http.ListenAndServe(":8080", routes)
 }
