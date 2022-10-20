@@ -10,6 +10,7 @@ import (
 
 type TCarService interface {
 	GetAll(ctx context.Context) ([]entities.TCar, error)
+	CreateOne(ctx context.Context, car entities.TCar) (entities.TCar, error)
 }
 
 type carService struct {
