@@ -14,6 +14,7 @@ func CarRoutes() *mux.Router {
 	router.HandleFunc("/cars", carCtrl.GetAll).Methods("GET")
 	router.HandleFunc("/cars", carCtrl.CreateOne).Methods("POST")
 	router.HandleFunc("/cars/{id}", carCtrl.GetOne).Methods("GET")
+	router.HandleFunc("/cars/{id}", carCtrl.DeleteOne).Methods("DELETE")
 
 	return router
 }

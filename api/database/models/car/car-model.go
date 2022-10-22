@@ -11,6 +11,7 @@ type TCarModel interface {
 	GetAll(ctx context.Context) ([]entities.TCar, error)
 	CreateOne(ctx context.Context, car *entities.TCar) (*entities.TCar, error)
 	GetOne(ctx *context.Context, id string) (*entities.TCar, error)
+	DeleteOne(ctx *context.Context, id string) (*mongo.DeleteResult, error)
 }
 
 type carModel struct {

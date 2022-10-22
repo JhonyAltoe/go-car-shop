@@ -10,6 +10,7 @@ import (
 )
 
 func (c *carController) CreateOne(res http.ResponseWriter, req *http.Request) {
+	res.Header().Add("Content-Type", "application/json")
 	var car *entities.TCar
 	err := json.NewDecoder(req.Body).Decode(&car)
 	if err != nil {
@@ -20,7 +21,6 @@ func (c *carController) CreateOne(res http.ResponseWriter, req *http.Request) {
 
 	createdCar, _ := c.CarService.CreateOne(context.Background(), car)
 
-	res.Header().Add("Content-Type", "application/json")
 	res.WriteHeader(http.StatusCreated)
 	defer json.NewEncoder(res).Encode(*createdCar)
 }

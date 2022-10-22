@@ -10,6 +10,7 @@ import (
 )
 
 func (c *carController) GetOne(res http.ResponseWriter, req *http.Request) {
+	res.Header().Add("Content-Type", "application/json")
 	param := mux.Vars(req)
 	car, err := c.CarService.GetOne(context.Background(), param["id"])
 	if err != nil {
@@ -19,7 +20,6 @@ func (c *carController) GetOne(res http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	res.Header().Add("Content-Type", "application/json")
 	res.WriteHeader(http.StatusOK)
 	defer json.NewEncoder(res).Encode(car)
 }
