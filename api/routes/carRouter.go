@@ -11,9 +11,9 @@ func CarRoutes() *mux.Router {
 	carCtrl := carController.New(carCollection)
 
 	router := mux.NewRouter()
-	router.Host("http://www.google.com")
 	router.HandleFunc("/cars", carCtrl.GetAll).Methods("GET")
 	router.HandleFunc("/cars", carCtrl.CreateOne).Methods("POST")
+	router.HandleFunc("/cars/{id}", carCtrl.GetOne).Methods("GET")
 
 	return router
 }

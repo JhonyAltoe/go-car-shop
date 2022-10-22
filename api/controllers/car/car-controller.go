@@ -10,6 +10,7 @@ import (
 type TCarController interface {
 	GetAll(res http.ResponseWriter, req *http.Request)
 	CreateOne(res http.ResponseWriter, req *http.Request)
+	GetOne(res http.ResponseWriter, req *http.Request)
 }
 
 type carController struct {
