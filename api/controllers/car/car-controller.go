@@ -12,6 +12,7 @@ type TCarController interface {
 	CreateOne(res http.ResponseWriter, req *http.Request)
 	GetOne(res http.ResponseWriter, req *http.Request)
 	DeleteOne(res http.ResponseWriter, req *http.Request)
+	Update(res http.ResponseWriter, req *http.Request)
 }
 
 type carController struct {

@@ -21,5 +21,5 @@ func (c *carController) GetOne(res http.ResponseWriter, req *http.Request) {
 	}
 
 	res.WriteHeader(http.StatusOK)
-	defer json.NewEncoder(res).Encode(car)
+	json.NewEncoder(res).Encode(car)
 }
