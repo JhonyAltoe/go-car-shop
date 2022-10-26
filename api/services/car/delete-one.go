@@ -2,16 +2,30 @@ package car_service
 
 import (
 	"context"
-	"fmt"
+	"errors"
+	"net/http"
 
+	"github.com/jhonyaltoe/go-car-shop/api/helpers"
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
-func (s carService) DeleteOne(ctx context.Context, id string) (*mongo.DeleteResult, error) {
-	v, err := s.carModel.DeleteOne(&ctx, id)
+func (s carService) DeleteOne(ctx context.Context, id string) (*mongo.DeleteResult, *helpers.CustomError) {
+	r, err := s.carModel.DeleteOne(&ctx, id)
 	if err != nil {
-		fmt.Println(err)
-		return v, err
+		return r, helpers.CustomErrBuilder(
+			http.StatusInternalServerError,
+			"Internal server error",
+			"Services.DeleteOne",
+			err,
+		)
 	}
-	return v, nil
+	if r.DeletedCount == 0 {
+		return r, helpers.CustomErrBuilder(
+			http.StatusInternalServerError,
+			"this car doesn't exist",
+			"Services.DeleteOne",
+			errors.New("the datadase could not find the 'id' car"),
+		)
+	}
+	return r, nil
 }

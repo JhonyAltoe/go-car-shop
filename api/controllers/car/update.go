@@ -3,11 +3,11 @@ package car_controller
 import (
 	"context"
 	"encoding/json"
-	"fmt"
 	"net/http"
 
 	"github.com/gorilla/mux"
-	"github.com/jhony/go-car-shop/api/database/entities"
+	"github.com/jhonyaltoe/go-car-shop/api/database/entities"
+	"github.com/jhonyaltoe/go-car-shop/api/helpers"
 )
 
 func (c carController) Update(res http.ResponseWriter, req *http.Request) {
@@ -17,17 +17,19 @@ func (c carController) Update(res http.ResponseWriter, req *http.Request) {
 	err := json.NewDecoder(req.Body).Decode(&car)
 	param := mux.Vars(req)
 	if err != nil {
-		fmt.Println(err)
-		res.WriteHeader(http.StatusInternalServerError)
-		res.Write([]byte(err.Error()))
+		customErr := helpers.CustomErrBuilder(
+			http.StatusBadRequest,
+			"Wrong json body",
+			"Controller.Update",
+			err,
+		)
+		helpers.SendError(customErr, res)
 		return
 	}
 
-	updatedCar, err := c.CarService.Update(context.Background(), param["id"], car)
-	if err != nil {
-		fmt.Println(err)
-		res.WriteHeader(http.StatusInternalServerError)
-		res.Write([]byte(err.Error()))
+	updatedCar, customErr := c.CarService.Update(context.Background(), param["id"], car)
+	if customErr != nil {
+		helpers.SendError(customErr, res)
 		return
 	}
 

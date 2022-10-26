@@ -3,7 +3,7 @@ package car_model
 import (
 	"context"
 
-	"github.com/jhony/go-car-shop/api/database/entities"
+	"github.com/jhonyaltoe/go-car-shop/api/database/entities"
 	"go.mongodb.org/mongo-driver/mongo"
 )
 

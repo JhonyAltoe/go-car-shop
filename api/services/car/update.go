@@ -2,14 +2,21 @@ package car_service
 
 import (
 	"context"
+	"net/http"
 
-	"github.com/jhony/go-car-shop/api/database/entities"
+	"github.com/jhonyaltoe/go-car-shop/api/database/entities"
+	"github.com/jhonyaltoe/go-car-shop/api/helpers"
 )
 
-func (s carService) Update(ctx context.Context, id string, car *entities.TCar) (*entities.TCar, error) {
+func (s carService) Update(ctx context.Context, id string, car *entities.TCar) (*entities.TCar, *helpers.CustomError) {
 	updatedCar, err := s.carModel.Update(ctx, id, car)
 	if err != nil {
-		return &entities.TCar{}, err
+		return updatedCar, helpers.CustomErrBuilder(
+			http.StatusInternalServerError,
+			"Internal server error",
+			"Services.Update",
+			err,
+		)
 	}
 
 	return updatedCar, nil

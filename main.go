@@ -5,7 +5,7 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/jhony/go-car-shop/api/routes"
+	"github.com/jhonyaltoe/go-car-shop/api/routes"
 )
 
 func main() {

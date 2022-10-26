@@ -1,4 +1,4 @@
-module github.com/jhony/go-car-shop
+module github.com/jhonyaltoe/go-car-shop
 
 go 1.19
 

@@ -3,10 +3,10 @@ package car_controller
 import (
 	"context"
 	"encoding/json"
-	"fmt"
 	"net/http"
 
-	"github.com/jhony/go-car-shop/api/database/entities"
+	"github.com/jhonyaltoe/go-car-shop/api/database/entities"
+	"github.com/jhonyaltoe/go-car-shop/api/helpers"
 )
 
 func (c *carController) CreateOne(res http.ResponseWriter, req *http.Request) {
@@ -14,14 +14,22 @@ func (c *carController) CreateOne(res http.ResponseWriter, req *http.Request) {
 
 	var car *entities.TCar
 	err := json.NewDecoder(req.Body).Decode(&car)
-	fmt.Println(">>>>>>>", car)
 	if err != nil {
-		res.WriteHeader(http.StatusInternalServerError)
-		fmt.Println(err)
-		res.Write([]byte(err.Error()))
+		customErr := helpers.CustomErrBuilder(
+			http.StatusBadRequest,
+			"Wrong json body",
+			"Controller.CreateOne",
+			err,
+		)
+		helpers.SendError(customErr, res)
+		return
 	}
 
-	createdCar, _ := c.CarService.CreateOne(context.Background(), car)
+	createdCar, custErr := c.CarService.CreateOne(context.Background(), car)
+	if custErr != nil {
+		helpers.SendError(custErr, res)
+		return
+	}
 
 	res.WriteHeader(http.StatusCreated)
 	json.NewEncoder(res).Encode(*createdCar)
